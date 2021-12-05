@@ -4,6 +4,13 @@
 #include <cassert>
 
 
+// 1:1 mapping between binary and hex numbers
+const std::string binNums[16] =
+{ "0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111" };
+const std::string hexNums[16] =
+{ "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F" };
+
+
 // Taken from geeksforgeeks.org
 bool InRange(unsigned low, unsigned high, unsigned x)
 {
@@ -84,16 +91,11 @@ std::vector<std::string> BinToHex(std::string bin)
 {
     int count = 0;
     std::vector<std::string> hex;
-    // 1:1 mapping between binary and hex numbers
-    const std::string binNums[16] =
-    { "0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111" };
-    const char hexNums[16] =
-    { '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F' };
 
     // Make sure binary number is a multiple of 4
     if (bin.size() % 4)
     {
-        const int zerosToAdd = 4 - bin.size() % 4;
+        const int zerosToAdd = 4 - (bin.size() % 4);
         for (int i = 0; i < zerosToAdd; i++)
         {
             bin.insert(0, "0");
@@ -114,11 +116,26 @@ std::vector<std::string> BinToHex(std::string bin)
         * and add the corresponding hex digit to the hex vector */
         int index = GetStrIndex(target, (std::string*)binNums, 16);
         assert(index != -1); // GetStrIndex should NEVER return -1
-        hex.push_back(std::string(1, hexNums[index]));
+        hex.push_back(hexNums[index]);
         count++;
     }
 
     return hex;
+}
+
+
+std::string HexToBin(std::string hex)
+{
+    std::string bin;
+
+    for (int i = 0; i < hex.size(); i++)
+    {
+        int index = GetStrIndex(std::string(1, hex[i]), (std::string*)hexNums, 16);
+        assert(index != -1); // GetStrIndex should NEVER return -1
+        bin.append(binNums[index]);
+    }
+
+    return bin;
 }
 
 
@@ -128,11 +145,12 @@ int main(int argc, char** argv)
     std::cout << "1: Decimal to Binary" << '\n';
     std::cout << "2: Decimal to Hexadecimal" << '\n';
     std::cout << "3: Binary to Hexadecimal" << '\n';
+    std::cout << "4: Hexadecimal to Binary" << '\n';
     std::cout << "Please choose function: ";
     std::cin >> choice;
-    while (!InRange(1, 3, choice))
+    while (!InRange(1, 4, choice))
     {
-        std::cout << "Please enter a valid number between 1 and 3: ";
+        std::cout << "Please enter a valid number between 1 and 4: ";
         std::cin >> choice;
     }
 
@@ -144,7 +162,7 @@ int main(int argc, char** argv)
         std::cin >> dec;
         std::vector bin = DecToBin(dec);
 
-        std::cout << "In binary that's: " << '\n';
+        std::cout << "In binary that's: ";
         for (int i = 0; i < bin.size(); i++)
         {
             std::cout << bin[i];
@@ -161,7 +179,7 @@ int main(int argc, char** argv)
         std::cin >> dec;
         std::vector hex = DecToHex(dec);
 
-        std::cout << "In hex that's: " << '\n';
+        std::cout << "In hex that's: ";
         for (int i = 0; i < hex.size(); i++)
         {
             std::cout << hex[i];
@@ -178,7 +196,7 @@ int main(int argc, char** argv)
         std::cin >> bin;
         std::vector hex = BinToHex(bin);
 
-        std::cout << "In hex that's: " << '\n';
+        std::cout << "In hex that's: ";
         for (int i = 0; i < hex.size(); i++)
         {
             std::cout << hex[i];
@@ -186,5 +204,15 @@ int main(int argc, char** argv)
 
         return 0;
     }
+
+    else if (choice == 4)
+    {
+        std::string hex;
+        std::cout << "Enter a hexadecimal number: ";
+        std::cin >> hex;
+        std::string bin = HexToBin(hex);
+        std::cout << "In binary that's: " << bin << '\n';
+    }
+
     else return 1;
 }
