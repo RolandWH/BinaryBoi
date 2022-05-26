@@ -1,7 +1,7 @@
 /*
   * Filename: BinaryBoi.cpp
-  * Authors(s): Roland (Roland@example.com)
-  * Description: Short description of file
+  * Authors(s): Roland (r.weirhowell@gmail.com)
+  * Description: Interactively convert between decimal, hex and binary
   *
   * This Source Code Form is subject to the terms of the Mozilla Public
   * License, v. 2.0. If a copy of the MPL was not distributed with this
