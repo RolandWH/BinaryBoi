@@ -1,3 +1,13 @@
+/*
+  * Filename: BinaryBoi.cpp
+  * Authors(s): Roland (Roland@example.com)
+  * Description: Short description of file
+  *
+  * This Source Code Form is subject to the terms of the Mozilla Public
+  * License, v. 2.0. If a copy of the MPL was not distributed with this
+  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+*/
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -107,13 +117,13 @@ std::string BinToHex(std::string bin)
     {
         std::string target;
         // Split binary "number" into chunks of 4
-        for (int i = count * 4; i < count * 4 + 4; i++)
+        for (int i = count  *    4; i < count  *    4 + 4; i++)
         {
             target.push_back(bin[i]);
         }
 
         /* Search for the current grouping of 4 in the binNums array
-        * and add the corresponding hex digit to the hex vector */
+         *    and add the corresponding hex digit to the hex vector  */
         int index = GetStrIndex(target, (std::string*)binNums, 16);
         assert(index != -1); // GetStrIndex should NEVER return -1
         hex.append(hexNums[index]);
